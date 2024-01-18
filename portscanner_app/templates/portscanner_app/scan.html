@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Port Scanner</title>
+  </head>
+  <body>
+    <h2>Port Scanner</h2>
+    <form method="post" action="{% url 'scan' %}">
+      {% csrf_token %}
+      <label for="start_ip">Start IP address:</label>
+      <input type="text" name="start_ip" required /><br />
+      <br />
+      <label for="end_ip">End IP address:</label>
+      <input type="text" name="end_ip" required /><br />
+      <br />
+      <input type="submit" value="Scan" />
+    </form>
+
+    {% if result %}
+    <h2>Scan Result</h2>
+    <div class="results">
+      {% if result|length > 0 %}
+      <ul>
+        {% for item in result %}
+        <li>{{ item }}</li>
+        {% endfor %}
+      </ul>
+      {% else %}
+      <p>No open ports found.</p>
+      {% endif %}
+    </div>
+    <a href="{% url 'scan' %}">Back to Scan</a>
+    {% endif %}
+  </body>
+</html>
